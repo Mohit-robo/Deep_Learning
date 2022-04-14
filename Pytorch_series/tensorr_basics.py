@@ -1,3 +1,7 @@
+'''
+This a pytorch series, so torch functionalities are been used, all of these operations can also be performed with numpy and tensorflow as well.
+'''
+
 import torch
 
 device = "cuda" if torch.cuda.is_available() else 'cpu'
