@@ -1,6 +1,7 @@
 '''
 Dataset: https://www.kaggle.com/datasets/77934f795ab14e30431ba210ec52d6ebb8b271da3a8e2d524012fdd5bec276ca
 
+Refer this blog for more detialed knowledge abot handling imbalanced dataset: https://towardsdatascience.com/address-class-imbalance-easily-with-pytorch-e2d4fa208627
 '''
 import torch
 import torchvision.datasets as datasets
