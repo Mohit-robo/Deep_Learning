@@ -37,4 +37,17 @@ Some results with the current basic code when ran for 10000 iteration are:
 ![Figure_0_1](https://user-images.githubusercontent.com/82194525/162433161-26448e82-f6a8-4969-90e2-6a7e366f0a76.png)
 ![Figure_0_1_class](https://user-images.githubusercontent.com/82194525/162433168-c77c0c27-d9af-4faf-8285-9d5562d3a466.png)
 
+## Other Folders
+
+### Deep Sort
+
+>> Implementing Object Tracking Algorithm Deep Sort with Yolov4.
+
+### [Paper Review Notes](https://medium.com/@mohit_gaikwad) 
+
+>> Links to Medium Blog posts reviewing various research papers in the field of Deep Learning.
+
+### PyTorch Series
+
+>> Implementation of various Deep Learning terminologies with PyTorch Framework. 
 
