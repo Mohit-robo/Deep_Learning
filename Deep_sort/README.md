@@ -14,7 +14,7 @@ matplotlib                3.5.1
 numpy                     1.19.5
 opencv-python             4.4.0.42 
 tensorflow                2.6.0 
-
+```
 ## Installation
 
 First, clone the repository:
