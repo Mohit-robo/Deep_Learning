@@ -22,7 +22,6 @@ First, clone the repository:
 git clone -b deep_sort_yolov4 https://github.com/nwojke/deep_sort.git
 ```
 
-```
 
 ## Testing
 
