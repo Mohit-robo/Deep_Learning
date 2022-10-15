@@ -11,11 +11,9 @@
       z = x + y           ## Performed on GPU
       z = z.numpy()       ## Numpy can only handle tensors on CPU memory but z is on GPU memory, so this line gives an error as below.
     print(z)
-
   ##### Error
   
     TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
-    
   ##### Solution
   
     z = z.cpu().numpy()   ## cpu() copies the same torch tensor to cpu memory so that Numpy is OK with it. 
@@ -32,7 +30,6 @@
   PyTorch will automatically track and calculate gradients for that tensor. 
   Setting `requires_grad=True` tells PyTorch that this parameter should be optimized during the training process using backpropagation, when gradients are used
   to update weights. This is done with the `tensor.backward()` method; during this operation tensors with `requires_grad=True` will be used along with the tensor used     to call `tensor.backward()` to calculate the gradients.
-  
   ##### Error
   
     a = torch.zeros_like(3,requires_grad = False)    ## Disable Differentiation
@@ -40,7 +37,7 @@
     
     RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
     
-  By switching the `requires_grad` flags to `False`, you can freeze part of your model and train the rest, no intermediate buffers will be saved, until the computation   gets to some point where one of the inputs of the operation requires the gradient. [Disabling Automatic Differentiation](https://aman.ai/primers/pytorch/#disabling-    automatic-differentiation)
+  By switching the `requires_grad` flags to `False`, you can freeze part of your model and train the rest, no intermediate buffers will be saved, until the computation   gets to some point where one of the inputs of the operation requires the gradient. [Disabling Automatic Differentiation](https://aman.ai/primers/pytorch/#disabling-automatic-differentiation)
   
   ##### Using `torch.no_grad()`
   
