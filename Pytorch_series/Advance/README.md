@@ -1,4 +1,6 @@
-## 1. Basics
+## 1.Basics 
+
+  [Notebook](https://github.com/Mohit-robo/Deep_Learning/blob/main/Pytorch_series/Advance/basics.ipynb)
   
   #### a. Switching from Torch Tensor to Numpy
   
@@ -52,3 +54,34 @@ If your goal is not to finetune, but to set your model in inference mode, the mo
     model.eval()
     
 This operation sets the attribute `self.training` of the layers to `False`, which changes the behavior of operations like `Dropout` or `BatchNorm` that behave differently at training vs. test time.
+
+## 2.Autograd
+
+#### Backward Function
+    x = torch.ones(5,requires_grad= True)
+    y = x+2
+    
+    Output: tensor([3., 3., 3., 3., 3.], grad_fn=<AddBackward0>)
+    
+  This happens due to `requires_grad = True` and `x` is added with some value to get the new variable that is a `gradient function`, that hold gradients of `x`.  
+  ``requires_grad = True` cause a computational graph to be constructed, allowing us to later perform backpropagation through the graph. 
+  
+  In the above cell code:
+  `x` is a Tensor with `requires_grad = True`, then after backpropagation `x.grad (y)` will be another Tensor holding the gradient of `x` with respect to some scalar value.
+  
+    The graph for updating X 
+        
+              ---------------> Forward Prop
+              
+              X -------------
+                            |
+                            |-----> y
+                            |
+              2 -------------
+              
+         Backward Prop -------------------->                     
+              
+              
+              
+              
+              
