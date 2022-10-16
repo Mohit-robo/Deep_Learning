@@ -57,6 +57,8 @@ This operation sets the attribute `self.training` of the layers to `False`, whic
 
 ## 2.Autograd
 
+[Notebook](https://github.com/Mohit-robo/Deep_Learning/blob/main/Pytorch_series/Advance/autograd.ipynb)
+
 #### Backward Function
     x = torch.ones(5,requires_grad= True)
     y = x+2
