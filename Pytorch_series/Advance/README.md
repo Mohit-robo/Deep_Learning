@@ -69,7 +69,7 @@ This operation sets the attribute `self.training` of the layers to `False`, whic
   ``requires_grad = True` cause a computational graph to be constructed, allowing us to later perform backpropagation through the graph. 
   
   In the above cell code:
-  `x` is a Tensor with `requires_grad = True`, then after backpropagation `x.grad (y)` will be another Tensor holding the gradient of `x` with respect to some scalar value.
+  `x` is a Tensor with `requires_grad = True`, then after backpropagation `x.grad (y)` will be another Tensor holding the gradient of `x` with respect to some scalar     value.
   
     The graph for updating X 
         
@@ -82,8 +82,33 @@ This operation sets the attribute `self.training` of the layers to `False`, whic
               2 -------------
               
          Backward Prop -------------------->                     
+                            
+                           
+## 3. Torch.nn
+       
+   The `nn` package defines a set of Modules, which are roughly equivalent to neural network layers. A Module receives input Tensors and computes output Tensors, but may also hold internal state such as Tensors containing learnable parameters. The `nn` package also defines a set of useful loss functions that are commonly used when training neural networks.
+
+#### `nn.Sequential`
+
+    # Use the nn package to define our model as a sequence of layers. nn.Sequential
+    # is a Module which contains other Modules, and applies them in sequence to
+    # produce its output. Each Linear Module computes output from input using a
+    # linear function, and holds internal Tensors for its weight and bias.
+    # After constructing the model we use the .to() method to move it to the
+    # desired device.
+    
+    model = torch.nn.Sequential(
+              torch.nn.Linear(D_in, H),
+              torch.nn.ReLU(),
+              torch.nn.Linear(H, D_out),
+            ).to(device)           
+
+#### Loss Functions
+     
+     torch.nn.MSELoss
+              CrossEntropyLoss
+              BCELoss
+              L1Loss
               
-              
-              
-              
-              
+  Apart from just `nn.Sequential`, `torch.nn` is also the parent class when creating models with Pytorch, i.e the model class inherits attributes from the `nn` Module.
+  
