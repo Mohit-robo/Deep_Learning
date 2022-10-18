@@ -111,4 +111,66 @@ This operation sets the attribute `self.training` of the layers to `False`, whic
               L1Loss
               
   Apart from just `nn.Sequential`, `torch.nn` is also the parent class when creating models with Pytorch, i.e the model class inherits attributes from the `nn` Module.
+
+## 4. torch.optim
+  
+  The optim package in PyTorch abstracts the idea of an optimization algorithm and provides implementations of commonly used optimization algorithms.
+  
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+                            Adagrad
+                            SGD
+                            RMSProp
+
+      # Before the backward pass, use the optimizer object to zero all of the
+      # gradients for the Tensors it will update (which are the learnable weights
+      # of the model)
+      optimizer.zero_grad()
+
+      # Backward pass: compute gradient of the loss with respect to model parameters
+      loss.backward()
+
+      # Calling the step function on an Optimizer makes an update to its parameters
+      optimizer.step()
+
+## 5. The training loop
+
+     for epoch in range(epochs):
+        model.train()
+        preds = model(X_train)
+        loss = loss_fxn(preds, truth)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()   
+
+  #### Step 1: The Forward pass.
+  
+  Here, the model takes your data, feeds it forward through your network architecture, and comes up with a prediction.
+  First, put the model in training mode using `model.train()`.
+  Second, make predictions: `predictions = model(training_data)`.
+  
+  #### Step 2: Calculate the loss.
+  
+  Your model will start off making errors.
+  These errors are the difference between your prediction and the ground truth.
+  You can calculate this as: `loss = loss_fxn(predictions, ground_truth)`.
+  
+  #### Step 3: Zero gradients.
+  
+  You need to zero out the gradients for the optimizer prior to performing back propagation.
+  If gradients accumulate across iterations, then your model won’t train properly.
+  You can do this via `optimizer.zero_grad()`.
+  
+  #### Step 4: Backprop.
+  
+  Next, you compute the gradient of the loss with respect to model parameter via backprop.
+  Only parameters with `requires_grad = True` will be updated.
+  This is where the learning starts to happen.
+  PyTorch makes it easy, all you do is call: `loss.backward()`.
+  
+  #### Step 5: Update the optimizer (gradient descent).
+  
+  Now it’s time to update your trainable parameters so that you can make better predictions.
+  Remember, trainable means that the parameter has `requires_grad=True`.
+  To update your parameters, all you do is call: `optimizer.step()`.
+
   
