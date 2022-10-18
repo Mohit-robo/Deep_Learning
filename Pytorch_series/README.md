@@ -2,20 +2,17 @@
 
 This repo contains:
 
-     implementing CNN, RNN, LSTM, GRU from scratch with Pytorch.
-
+     Implementing CNN, RNN, LSTM, GRU from scratch with Pytorch.
      Creating Dataset to train a Model.
-
      Data Augmentation Techniques.
-
-     Trainig a INstance Segmentation Network by Fine-Tuning Mask-RCNN.
-
+     Trainig a Instance Segmentation Network by Fine-Tuning Mask-RCNN.
+     Object Detection using YOLO.
+     Other PyTorch basic and Advance concepts.
+          
 Future addition:
     
-    Object Detection using YOLOv4.
+    NLP concepts
+    Frequent torch,torchvision errors
 
-    Object Classification.
-
-    Other PyTorch basic concepts.
 
 In case any doubt related to concept, try directly refering to PyTorch's original Documentation.
