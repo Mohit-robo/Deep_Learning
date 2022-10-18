@@ -51,3 +51,6 @@ Some results with the current basic code when ran for 10000 iteration are:
 
     Implementation of various Deep Learning terminologies with PyTorch Framework. 
 
+### YOLO
+    
+    Implementation of YOLO v4 - v7.
