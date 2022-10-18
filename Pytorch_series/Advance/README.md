@@ -172,5 +172,7 @@ This operation sets the attribute `self.training` of the layers to `False`, whic
   Now it’s time to update your trainable parameters so that you can make better predictions.
   Remember, trainable means that the parameter has `requires_grad=True`.
   To update your parameters, all you do is call: `optimizer.step()`.
+  
+![ptl](https://user-images.githubusercontent.com/82194525/196495949-b5c1e70f-dbd0-43b7-832a-6fa73a0c47c3.jpeg)
 
   
