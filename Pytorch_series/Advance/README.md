@@ -175,4 +175,50 @@ This operation sets the attribute `self.training` of the layers to `False`, whic
   
 ![ptl](https://user-images.githubusercontent.com/82194525/196495949-b5c1e70f-dbd0-43b7-832a-6fa73a0c47c3.jpeg)
 
+## 6. Using Multiple GPU's
+
+We want to distribute the data across the available GPUs (If you have batch size of 16, and 2 GPUs, you might be looking providing the 8 samples to each of the GPUs), and not really spread out the parts of models across difference GPU's. This can be done as follows:
+
+If you want to use all the available GPUs:
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    model = CreateModel()
+
+    model= nn.DataParallel(model)
+    model.to(device)
+
+If you want to use specific GPUs: (For example, using 2 out of 4 GPUs)
+
+    device = torch.device("cuda:1,3" if torch.cuda.is_available() else "cpu") ## specify the GPU id's, GPU id's start from 0.
+
+    model = CreateModel()
+
+    model= nn.DataParallel(model,device_ids = [1, 3])
+    model.to(device)
+
+To use the specific GPU's by setting OS environment variable:
+
+Before executing the program, set CUDA_VISIBLE_DEVICES variable as follows:
+
+    export CUDA_VISIBLE_DEVICES=1,3 (Assuming you want to select 2nd and 4th GPU)
+
+Then, within program, you can just use DataParallel() as though you want to use all the GPUs. (similar to 1st case). Here the GPUs available for the program is restricted by the OS environment variable.
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    model = CreateModel()
+
+    model= nn.DataParallel(model)
+    model.to(device)
+
+In all of these cases, the data has to be mapped to the device.
+
+If X and y are the data:
+
+    X.to(device)
+    y.to(device)
+
+
+
   
