@@ -39,18 +39,10 @@ Some results with the current basic code when ran for 10000 iteration are:
 
 ## Other Folders
 
-### Deep Sort
+**Deep Sort**:Implementing Object Tracking Algorithm Deep Sort with Yolov4.
 
-    Implementing Object Tracking Algorithm Deep Sort with Yolov4.
+**[Paper Review Notes](https://medium.com/@mohit_gaikwad)**: Links to Medium Blog posts reviewing various research papers in the field of Deep Learning.
 
-### [Paper Review Notes](https://medium.com/@mohit_gaikwad) 
+**PyTorch Series**: Implementation of various Deep Learning terminologies with PyTorch Framework. 
 
-    Links to Medium Blog posts reviewing various research papers in the field of Deep Learning.
-
-### PyTorch Series
-
-    Implementation of various Deep Learning terminologies with PyTorch Framework. 
-
-### YOLO
-    
-    Implementation of YOLO v4 - v7.
+**YOLO**: Implementation of YOLO v4 - v7.
