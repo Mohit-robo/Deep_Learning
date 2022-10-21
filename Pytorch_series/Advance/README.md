@@ -55,6 +55,87 @@ If your goal is not to finetune, but to set your model in inference mode, the mo
     
 This operation sets the attribute `self.training` of the layers to `False`, which changes the behavior of operations like `Dropout` or `BatchNorm` that behave differently at training vs. test time.
 
+## 2. PyTorch Dataset
+ 
+ We will used the **SIGNS dataset**. The dataset is hosted on google drive, download it [here](https://drive.google.com/file/d/1ufiR6hUKhXoAyiBNsySPkUwlvE_wfEHC/view).
+ This will download the SIGNS dataset (~1.1 GB) contain photos of hands signs representing numbers between 0 and 5. Here is the structure of the data:
+
+      SIGNS/
+        train_signs/
+            0_IMG_5864.jpg
+            ...
+        test_signs/
+            0_IMG_5942.jpg
+            ...
+The images are named following {label}_IMG_{id}.jpg where the label is in [0, 5].
+
+Once the download is complete, move the dataset into the data/SIGNS folder. Run python build_dataset.py which will resize the images to size (64,64). The new resized dataset will be located by default in data/64x64_SIGNS
+
+#### Creating a PyTorch Dataset
+
+`torch.utils.data` provides some nifty functionality for loading data. We use `torch.utils.data.Dataset`, which is an abstract class representing a dataset. To make our own `SIGNSDataset` class, we need to inherit the `Dataset` class and override the following methods:
+`__len__`: so that len(dataset) returns the size of the dataset
+`__getitem__`: to support indexing using dataset[i] to get the ith image
+
+    from PIL import Image
+    from torch.utils.data import Dataset, DataLoader
+
+    class SIGNSDataset(Dataset):
+        def __init__(self, data_dir, transform):      
+            # store filenames
+            # self.filenames = os.listdir(data_dir) or ...
+            self.filenames = [os.path.join(data_dir, f) for f in self.filenames]
+
+        # the first character of the filename contains the label
+        self.labels = [int(filename.split('/')[-1][0]) for filename in self.filenames]
+        self.transform = transform
+
+    def __len__(self):
+        # return size of dataset
+        return len(self.filenames)
+
+    def __getitem__(self, idx):
+        # open image, apply transforms and return with label
+        image = Image.open(self.filenames[idx])  # PIL image
+        image = self.transform(image)
+        return image, self.labels[idx]
+   
+#### Transforms
+
+When we return an image-label pair using `__getitem__` we apply a `transform` on the image. These transformations are a part of the `torchvision.transforms` package, that allow us to annotate the images easily. Consider the following composition of multiple transforms:
+
+    train_transformer = transforms.Compose([
+        transforms.Resize(64),              # resize the image to 64x64 
+        transforms.RandomHorizontalFlip(),  # randomly flip image horizontally
+        transforms.ToTensor()])             # transform it into a PyTorch Tensor
+
+When we apply `self.transform(image)` in `__getitem__`, we pass it through the above transformations before using it as a training example. The final output is a PyTorch Tensor. To augment the dataset during training, we also use the `RandomHorizontalFlip` transform when loading the image.
+
+    train_dataset = SIGNSDataset(train_data_path, train_transformer)
+    val_dataset = SIGNSDataset(val_data_path, eval_transformer)
+    test_dataset = SIGNSDataset(test_data_path, eval_transformer)
+
+#### Loading Data Batches
+
+`torch.utils.data.DataLoader` provides an iterator that takes in a `Dataset` object and performs batching, shuffling and loading of the data. This is crucial when images are big in size and take time to load. In such cases, the GPU can be left idling while the CPU fetches the images from file and then applies the transforms.
+
+In contrast, the `DataLoader` class (using multiprocessing) fetches the data asynchronously and prefetches batches to be sent to the GPU. Initializing the `DataLoader` is quite easy:
+
+    train_dataloader = DataLoader(SIGNSDataset(train_data_path, train_transformer), 
+                       batch_size=hyperparams.batch_size, shuffle=True,
+                       num_workers=hyperparams.num_workers)
+
+We can then iterate through batches of examples as follows:
+
+    for train_batch, labels_batch in train_dataloader:
+        # wrap Tensors in Variables
+        train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
+
+        # pass through model, perform backpropagation and updates
+        output_batch = model(train_batch)
+
+Applying transformations on the data loads them as PyTorch `Tensors`. The for loop ends after one pass over the data, i.e., after one epoch. It can be reused again for another epoch without any changes. We can use similar data loaders for validation and test data.
+
 ## 2.Autograd
 
 [Notebook](https://github.com/Mohit-robo/Deep_Learning/blob/main/Pytorch_series/Advance/autograd.ipynb)
