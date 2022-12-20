@@ -1,2 +1,0 @@
-1. AttributeError: 'Profile' object has no attribute 'dt'
-2. Botsort with reid
