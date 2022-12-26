@@ -4,4 +4,4 @@ __pycache__
 NLP/nlp/
 NLP/Named_entity_rec/ner
 NLP/Text_classification/data
-trackers
+trackers/*
