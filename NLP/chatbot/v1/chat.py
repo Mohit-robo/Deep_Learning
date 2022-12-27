@@ -24,17 +24,18 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 model.load_state_dict(model_state)
 model.eval()
 
-bot_name = 'momo'
-print("Lets chat!, type I quit to exit")
-user_name = input('May we know your name : ')
-print('Please ask me about us !!!')
+bot_name = 'Mohit'
 
-while True:
-    sentence = input(f'{user_name}: ')
-    if sentence == 'I quit':
-        break
+'''
+* 
+1. Remove the above line
+2. Make it my personal assitant bot/ profile teller
+3. Add greetings according to date and time
+'''
+    
+def get_response(msg):
 
-    sentence = tokenize(sentence)
+    sentence = tokenize(msg)
     X = bag_of_words(sentence,all_words)
     X = X.reshape(-1,X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -49,7 +50,19 @@ while True:
     if prob.item() > 0.75:
         for intent in intents['intents']:
             if tag == intent['tag']:
-                print(f"{bot_name}: {random.choice(intent['responses'])}")
-
+                return f"{bot_name}: {random.choice(intent['responses'])}"
     else:
-        print(f"{bot_name}: Sorry did not get you...")
+        f"{bot_name}: Sorry did not get you..."
+
+    return 
+
+if __name__ == "__main__":
+    user_name = input('May we know your name : ')
+    print('Please ask me about us !!!')
+
+    while True:
+        sentence = input(f'{user_name}: ')
+        if sentence == 'I quit':
+            break
+    resp = get_response(sentence)
+    print(resp)
