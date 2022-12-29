@@ -1,5 +1,5 @@
 import numpy as np
-from utlis import create_dataset, plot_contour
+from Basic_Network.utlis import create_dataset, plot_contour
 
 class NeuralNetwork:
     def __init__(self,X,y):

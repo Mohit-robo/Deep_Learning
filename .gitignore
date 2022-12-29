@@ -9,3 +9,4 @@ weights/
 
 #file extensions
 *.pt
+*.pth
