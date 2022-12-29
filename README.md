@@ -41,12 +41,9 @@ Some other files included, share knowledge about advance `Pytorch` [concepts](Py
 
 </details>
 
-## Other Folders
+<details>
+<summary>trackers</summary>
 
-**Deep Sort**:Implementing Object Tracking Algorithm Deep Sort with Yolov4.
+This repo contains the [Yolov5_StrongSORT_OSNet](https://github.com/Mohit-robo/Yolov5_StrongSORT_OSNet) repo as submodule. This repo has some amazing implementation as combination of various trackers with Yolov5 detector.
 
-**[Paper Review Notes](https://medium.com/@mohit_gaikwad)**: Links to Medium Blog posts reviewing various research papers in the field of Deep Learning.
-
-**PyTorch Series**: Implementation of various Deep Learning terminologies with PyTorch Framework. 
-
-**YOLO**: Implementation of YOLO v4 - v7.
+</details>
