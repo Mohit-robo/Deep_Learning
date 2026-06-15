@@ -6,7 +6,12 @@ NLP/Named_entity_rec/ner
 NLP/Text_classification/data
 trackers/*
 weights/
+images/
+output/
+model_repository/
+
 
 #file extensions
 *.pt
 *.pth
+*.zip
