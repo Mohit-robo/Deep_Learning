@@ -1,0 +1,25 @@
+class-attrs-all:
+  pre-cluster-threshold: 0.1
+  detected-min-w: 5
+  detected-min-h: 5
+
+property:
+  gie-unique-id: 1
+  gpu-id: 0
+  net-scale-factor: 0.0039215697906911373
+  model-color-format: 0
+  onnx-file: /home/griffyn/Mohit_Sentinal_Testing/deepstream_models/dfine/coco_s_simplified_87_1_finetuned.onnx
+  model-engine-file: /home/griffyn/Mohit_Sentinal_Testing/deepstream_models/dfine/coco_s_simplified_87_1_finetuned.onnx_b4_gpu0_fp32.engine
+  labelfile-path: ds-detector-labels_87_classes.txt
+  batch-size: 4
+  infer-dims: 3;800;800
+  network-mode: 0
+  num-detected-classes: 87
+  process-mode: 1
+  network-type: 0
+  cluster-mode: 2
+  maintain-aspect-ratio: 0
+  symmetric-padding: 0
+  parse-bbox-func-name: NvDsInferParseDFineBbox
+  custom-lib-path: /home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/custom_parsers/dfine_parser/libdfineparser.so
+  force-implicit-batch-dim: 0

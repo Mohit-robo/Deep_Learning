@@ -1,0 +1,33 @@
+[property]
+gpu-id=0
+net-scale-factor=0.00784313725490196
+offsets=127.5;127.5;127.5
+model-color-format=1
+
+# Provide the ONNX file path and engine file path
+onnx-file=/home/griffyn/Mohit_Sentinal_Testing/deepstream_models/parseq/model_fixed_b32.onnx
+model-engine-file=/home/griffyn/Mohit_Sentinal_Testing/deepstream_models/parseq/model_fixed.onnx_b32_gpu0_fp32.engine
+infer-dims=3;32;128
+
+batch-size=32
+force-implicit-batch-dim=1
+network-mode=0
+
+# network-type=1 for Classifier (although PARSEQ uses custom parsing)
+network-type=1
+# Alternatively, network-type=100 (Other) if using output-tensor-meta=1 and handling completely in probe
+
+# Secondary inference settings
+process-mode=2
+gie-unique-id=3
+operate-on-gie-id=2
+operate-on-class-ids=0
+
+# Pre-processing
+maintain-aspect-ratio=0
+scaling-filter=1
+
+# Post-processing
+parse-classifier-func-name=NvDsInferParseCustomParseq
+custom-lib-path=/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/custom_parsers/parseq/libnvdsinfer_custom_parseq.so
+output-tensor-meta=1

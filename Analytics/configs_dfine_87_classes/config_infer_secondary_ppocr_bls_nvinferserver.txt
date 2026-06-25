@@ -1,0 +1,46 @@
+infer_config {
+  unique_id: 2
+  gpu_ids: [0]
+  max_batch_size: 1
+  backend {
+    inputs [
+      {
+        name: "IMAGE"
+        dims: [128, 384, 3]
+      }
+    ]
+    triton {
+      model_name: "ppocr_bls"
+      version: -1
+      grpc {
+        url: "localhost:8001"
+      }
+    }
+  }
+  preprocess {
+    network_format: IMAGE_FORMAT_RGB
+    tensor_order: TENSOR_ORDER_NHWC
+    tensor_name: "IMAGE"
+    maintain_aspect_ratio: 0
+    normalize {
+      scale_factor: 1.0
+      channel_offsets: [0, 0, 0]
+    }
+  }
+  postprocess {
+    other {}
+  }
+  extra {
+    copy_input_to_host_buffers: false
+  }
+}
+input_control {
+  process_mode: PROCESS_MODE_CLIP_OBJECTS
+  operate_on_gie_id: 1
+  operate_on_class_ids: [80]
+  #operate_on_class_ids: [80, 83, 84]
+
+}
+output_control {
+  output_tensor_meta: true
+}

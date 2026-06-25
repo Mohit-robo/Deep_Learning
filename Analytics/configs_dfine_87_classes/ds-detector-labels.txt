@@ -1,0 +1,17 @@
+person
+bicycle
+car
+motorcycle
+bus
+truck
+traffic light
+stop sign
+cat
+dog
+number_plate
+tempo
+auto
+number_plate_2
+number_plate_3
+logo
+helmet

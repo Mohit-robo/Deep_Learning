@@ -1,0 +1,30 @@
+[property]
+gpu-id=0
+net-scale-factor=0.017124753831663666
+offsets=103.53;116.28;123.675
+model-color-format=1
+
+# Using the generated TRT engine file
+onnx-file=/home/griffyn/Mohit_Sentinal_Testing/deepstream_models/craft/model.onnx
+model-engine-file=/home/griffyn/Mohit_Sentinal_Testing/deepstream_models/craft/model.onnx_b8_gpu0_fp32.engine
+infer-dims=3;416;416
+network-type=0
+
+batch-size=8
+network-mode=0
+
+# Secondary inference settings
+process-mode=2
+gie-unique-id=2
+operate-on-gie-id=1
+operate-on-class-ids=80;83;84
+
+# Pre-processing
+maintain-aspect-ratio=1
+symmetric-padding=1
+scaling-filter=1
+
+# Post-processing
+num-detected-classes=1
+parse-bbox-func-name=NvDsInferParseCustomCRAFT
+custom-lib-path=/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/custom_parsers/craft/libnvdsinfer_custom_craft.so
