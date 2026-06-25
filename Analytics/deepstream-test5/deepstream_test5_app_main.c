@@ -69,6 +69,7 @@ static void load_postproc_lib() {
 #include "nvdsmeta_schema.h"
 
 #include "deepstream_test5_app.h"
+#include "plate_accumulators.hpp"
 
 #define MAX_DISPLAY_LEN (64)
 #define MAX_TIME_STAMP_LEN (64)
@@ -567,7 +568,6 @@ generate_event_msg_meta (AppCtx * appCtx, gpointer data, gint class_id, gboolean
          for (NvDsMetaList *l_label = class_meta->label_info_list; l_label != NULL; l_label = l_label->next) {
            NvDsLabelInfo *label_info = (NvDsLabelInfo *)l_label->data;
            plate_text = label_info->result_label;
-           printf("plate_text = %s \n", plate_text);
            break;
          }
        }
@@ -869,6 +869,26 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
           nvds_add_classifier_meta_to_object(p, classifier_meta);
           
           free_plate_result_fn(res);
+
+          // Compute average character confidence from OCR word outputs
+          // (c_confs[j][k] = uniform avg_conf for word j, c_confs still valid here)
+          float plate_total_conf = 0.0f;
+          int   plate_total_chars = 0;
+          for (int j = 0; j < num_words; j++) {
+            if (c_confs[j] && c_num_confs[j] > 0) {
+              for (int k = 0; k < c_num_confs[j]; k++)
+                plate_total_conf += c_confs[j][k];
+              plate_total_chars += c_num_confs[j];
+            }
+          }
+          float plate_avg_conf = (plate_total_chars > 0) ? plate_total_conf / plate_total_chars : 0.0f;
+
+          // Feed into plate accumulator for temporal aggregation
+          plate_accum_feed(
+              (uint64_t)p->object_id,
+              label_info->result_label,
+              plate_avg_conf,
+              (uint32_t)frame_meta->source_id);
         }
 
         for (int j = 0; j < num_words; j++) {
@@ -912,6 +932,8 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
           g_snprintf(tempBuffer, sizeof(tempBuffer), "%ld,", objList->uniqueId);
           if (objList->classId==PGIE_CLASS_ID_PERSON)
             strncat(terminatedString, tempBuffer, sizeof(terminatedString));
+          else if (objList->classId == 80 || objList->classId == 83 || objList->classId == 84)
+            plate_accum_finalize((uint64_t)objList->uniqueId, (uint32_t)frame_meta->source_id);
           else
             continue;
         // printf("Terminated tracks : %hu, %d, %ld, %d \n", stream_id_1, frame_meta->frame_num, objList->uniqueId, objList->classId);
@@ -1021,6 +1043,7 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
         }
       }
     }
+    plate_accum_reap_stale();
     testAppCtx->streams[stream_id].frameCount++;
   }
 }

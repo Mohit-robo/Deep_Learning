@@ -54,6 +54,16 @@ LIBS+= $(shell pkg-config --libs $(PKGS))
 
 all: $(APP)
 
+# deepstream_test5_app_main.c includes a C++ header (plate_accumulators.hpp)
+# so it must be compiled with g++ instead of gcc.
+deepstream_test5_app_main.o: deepstream_test5_app_main.c $(INCS) Makefile
+	$(CXX) -c -o $@ $(CFLAGS) $<
+
+# deepstream_utc.c is linked against the C++ main object, so compile
+# it with g++ too to avoid C/C++ name mangling mismatches.
+deepstream_utc.o: deepstream_utc.c $(INCS) Makefile
+	$(CXX) -c -o $@ $(CFLAGS) $<
+
 %.o: %.c $(INCS) Makefile
 	$(CC) -c -o $@ $(CFLAGS) $<
 
