@@ -4,9 +4,6 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <opencv2/cudaimgproc.hpp>
-#include <opencv2/cudaarithm.hpp>
-#include <opencv2/cudafilters.hpp>
 
 extern "C" bool NvDsInferParseCustomCRAFT(
     std::vector<NvDsInferLayerInfo> const &outputLayersInfo,
@@ -79,29 +76,18 @@ extern "C" bool NvDsInferParseCustomCRAFT(
         }
     }
 
-    // Thresholding using CUDA
-    cv::cuda::GpuMat d_textmap(textmap);
-    cv::cuda::GpuMat d_linkmap(linkmap);
-    cv::cuda::GpuMat d_text_score, d_link_score;
-
-    cv::cuda::threshold(d_textmap, d_text_score, low_text, 1.0, cv::THRESH_BINARY);
-    cv::cuda::threshold(d_linkmap, d_link_score, link_threshold, 1.0, cv::THRESH_BINARY);
+    // Thresholding on CPU
+    cv::Mat text_score, link_score;
+    cv::threshold(textmap, text_score, low_text, 1.0, cv::THRESH_BINARY);
+    cv::threshold(linkmap, link_score, link_threshold, 1.0, cv::THRESH_BINARY);
 
     // Combine
-    cv::cuda::GpuMat d_text_score_comb;
-    cv::cuda::add(d_text_score, d_link_score, d_text_score_comb);
-    cv::cuda::threshold(d_text_score_comb, d_text_score_comb, 1.0, 1.0, cv::THRESH_TRUNC);
+    cv::Mat text_score_comb;
+    cv::add(text_score, link_score, text_score_comb);
+    cv::threshold(text_score_comb, text_score_comb, 1.0, 1.0, cv::THRESH_TRUNC);
     
-    cv::cuda::GpuMat d_text_score_comb_8u;
-    d_text_score_comb.convertTo(d_text_score_comb_8u, CV_8UC1);
-
     cv::Mat text_score_comb_8u;
-    d_text_score_comb_8u.download(text_score_comb_8u);
-
-    // We also need text_score and link_score on CPU for the loop below
-    cv::Mat text_score, link_score;
-    d_text_score.download(text_score);
-    d_link_score.download(link_score);
+    text_score_comb.convertTo(text_score_comb_8u, CV_8UC1);
 
     // Connected Components
     cv::Mat labels, stats, centroids;

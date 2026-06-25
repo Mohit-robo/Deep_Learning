@@ -1,0 +1,54 @@
+services:
+  deepstream-analytics:
+    image: oneeye-deepstream-backend:latest
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile
+
+    container_name: deepstream-analytics
+
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+
+      # X11 / EGL rendering support
+      DISPLAY: ${DISPLAY}
+      QT_X11_NO_MITSHM: 1
+
+      # Optional runtime config
+      GRPC_PORT: 50051
+      RTSP_PORT: 8554
+
+    # GPU access
+    gpus: all
+
+    ports:
+      # gRPC backend control
+      - "50051:50051"
+
+      # RTSP streaming
+      - "8554:8554"
+
+      # RTP/RTCP UDP ports
+      - "5400-5500:5400-5500/udp"
+
+    volumes:
+      # Project mount
+      - .:/app
+
+      # X11 socket mount (required for GUI rendering)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    # Better DeepStream stability
+    ipc: host
+    shm_size: "4gb"
+
+    restart: unless-stopped
+
+    stdin_open: true
+    tty: true
+
+    # Recommended for DeepStream GUI apps
+    privileged: true
+    # Uncomment if needed
+    # network_mode: host

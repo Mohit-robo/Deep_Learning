@@ -10,8 +10,8 @@ CUDA_LIB := /usr/local/cuda/lib64
 
 DS_INC := /opt/nvidia/deepstream/deepstream/sources/includes
 
-OPENCV_INC := /usr/local/include/opencv4
-OPENCV_LIB := /usr/local/lib
+OPENCV_INC := /usr/include/opencv4
+OPENCV_LIB := /usr/lib/x86_64-linux-gnu
 
 CFLAGS := -O3 -Wall -fPIC -std=c++17 \
            -I$(DS_INC) \
@@ -23,10 +23,6 @@ LIBS := -L$(CUDA_LIB) \
         -lopencv_core \
         -lopencv_imgproc \
         -lopencv_imgcodecs \
-        -lopencv_cudaimgproc \
-        -lopencv_cudaarithm \
-        -lopencv_cudafilters \
-        -lopencv_cudawarping \
         -lcudart
 
 all: $(LIB)

@@ -10,9 +10,6 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
-#include <opencv2/cudaimgproc.hpp>
-#include <opencv2/cudaarithm.hpp>
-#include <opencv2/cudafilters.hpp>
 
 namespace ocrpipe
 {
@@ -127,27 +124,20 @@ inline std::vector<std::vector<cv::Point2f>> craft_heatmap_to_boxes(
         return boxes;
     }
 
-    cv::cuda::GpuMat d_heatmap(height, width, CV_32FC(channels), const_cast<float*>(output));
-    std::vector<cv::cuda::GpuMat> planes;
-    cv::cuda::split(d_heatmap, planes);
+    cv::Mat heatmap(height, width, CV_32FC(channels), const_cast<float*>(output));
+    std::vector<cv::Mat> planes;
+    cv::split(heatmap, planes);
 
     const float low_text = 0.4f;
-    cv::cuda::GpuMat d_text_mask;
-    cv::cuda::GpuMat d_link_mask;
-    cv::cuda::GpuMat d_combined_mask;
-
-    cv::cuda::threshold(planes[0], d_text_mask, low_text, 1.0, cv::THRESH_BINARY);
-    cv::cuda::threshold(planes[1], d_link_mask, link_threshold, 1.0, cv::THRESH_BINARY);
-    d_text_mask.convertTo(d_text_mask, CV_8U);
-    d_link_mask.convertTo(d_link_mask, CV_8U);
-    cv::cuda::bitwise_or(d_text_mask, d_link_mask, d_combined_mask);
-
     cv::Mat text_mask;
     cv::Mat link_mask;
     cv::Mat combined_mask;
-    d_text_mask.download(text_mask);
-    d_link_mask.download(link_mask);
-    d_combined_mask.download(combined_mask);
+
+    cv::threshold(planes[0], text_mask, low_text, 1.0, cv::THRESH_BINARY);
+    cv::threshold(planes[1], link_mask, link_threshold, 1.0, cv::THRESH_BINARY);
+    text_mask.convertTo(text_mask, CV_8U);
+    link_mask.convertTo(link_mask, CV_8U);
+    cv::bitwise_or(text_mask, link_mask, combined_mask);
 
     if (cv::countNonZero(combined_mask) == 0) {
         return boxes;

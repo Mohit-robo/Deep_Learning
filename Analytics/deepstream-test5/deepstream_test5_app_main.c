@@ -46,7 +46,7 @@ static FreePlateResultFunc free_plate_result_fn = NULL;
 
 static void load_postproc_lib() {
     if (!postproc_lib_handle) {
-        postproc_lib_handle = dlopen("/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/custom_parsers/postprocess/libpostprocess.so", RTLD_LAZY);
+        postproc_lib_handle = dlopen("/app/configs_dfine_87_classes/custom_parsers/postprocess/libpostprocess.so", RTLD_LAZY);
         if (postproc_lib_handle) {
             process_plate_fn = (ProcessPlateFunc)dlsym(postproc_lib_handle, "process_plate");
             free_plate_result_fn = (FreePlateResultFunc)dlsym(postproc_lib_handle, "free_plate_result");
@@ -1071,7 +1071,7 @@ perf_cb (gpointer context, NvDsAppPerfStruct * str)
       NvDsSensorInfo* sensorInfo = get_sensor_info(appCtx, i);
       if (sensorInfo) {
         
-        sensorInfo->ds_fps = fps[i];
+        // sensorInfo->ds_fps = fps[i];
       }
 
       if (appCtx->pipeline.multi_src_bin.nvmultiurisrcbin) {
@@ -1118,7 +1118,7 @@ perf_cb (gpointer context, NvDsAppPerfStruct * str)
       fps_avg[i] = str->fps_avg[i];
       NvDsSensorInfo* sensorInfo = get_sensor_info(appCtx, i);
       if (sensorInfo) {
-        sensorInfo->ds_fps = fps[i];
+        // sensorInfo->ds_fps = fps[i];
       }
 
       if (appCtx->pipeline.multi_src_bin.nvmultiurisrcbin) {

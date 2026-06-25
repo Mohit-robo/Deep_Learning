@@ -5,11 +5,11 @@ offsets=127.5;127.5;127.5
 model-color-format=1
 
 # Provide the ONNX file path and engine file path
-onnx-file=/home/griffyn/Mohit_Sentinal_Testing/deepstream_models/parseq/model_fixed_b32.onnx
-model-engine-file=/home/griffyn/Mohit_Sentinal_Testing/deepstream_models/parseq/model_fixed.onnx_b32_gpu0_fp32.engine
+onnx-file=/app/deepstream_models/parseq/model_fixed.onnx
+model-engine-file=/app/deepstream_models/parseq/model_fixed.onnx_b8_gpu0_fp32.engine
 infer-dims=3;32;128
 
-batch-size=32
+batch-size=8
 force-implicit-batch-dim=1
 network-mode=0
 
@@ -29,5 +29,5 @@ scaling-filter=1
 
 # Post-processing
 parse-classifier-func-name=NvDsInferParseCustomParseq
-custom-lib-path=/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/custom_parsers/parseq/libnvdsinfer_custom_parseq.so
+custom-lib-path=/app/configs_dfine_87_classes/custom_parsers/parseq/libnvdsinfer_custom_parseq.so
 output-tensor-meta=1

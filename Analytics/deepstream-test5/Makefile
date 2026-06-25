@@ -10,10 +10,7 @@
 # its affiliates is strictly prohibited.
 ################################################################################
 
-CUDA_VER?=
-ifeq ($(CUDA_VER),)
-  $(error "CUDA_VER is not set")
-endif
+CUDA_VER?=12.6
 
 APP:= deepstream-test5-app
 
@@ -44,9 +41,9 @@ OBJS:= $(OBJS:.cpp=.o)
 CFLAGS+= -I /opt/nvidia/deepstream/deepstream-$(NVDS_VERSION)/sources/apps/apps-common/includes \
 		 -I /opt/nvidia/deepstream/deepstream-$(NVDS_VERSION)/sources/includes \
 		 -I../deepstream-app/ -DDS_VERSION_MINOR=0 -DDS_VERSION_MAJOR=5 \
-		 -I /usr/local/cuda-$(CUDA_VER)/include
+		 -I/usr/local/cuda/include
 
-LIBS:= -L/usr/local/cuda-$(CUDA_VER)/lib64/ -lcudart
+LIBS:= -L/usr/local/cuda/lib64/ -lcudart
 
 LIBS+= -L$(LIB_INSTALL_DIR) -lnvdsgst_meta -lnvds_meta -lnvdsgst_helper -lnvds_batch_jpegenc -lnvdsgst_customhelper -lnvdsgst_smartrecord -lnvds_utils -lnvds_msgbroker -lm \
        -lyaml-cpp -lcuda -lgstrtspserver-1.0 -ldl -Wl,-rpath,$(LIB_INSTALL_DIR)

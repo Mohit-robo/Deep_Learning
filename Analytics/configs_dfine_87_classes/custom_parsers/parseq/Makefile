@@ -11,8 +11,8 @@ DEEPSTREAM_INCLUDE = $(DEEPSTREAM_DIR)/sources/includes
 CUDA_INCLUDE = /usr/local/cuda/include
 CUDA_LIB = /usr/local/cuda/lib64
 
-OPENCV_INCLUDE = /usr/local/include/opencv4
-OPENCV_LIB = /usr/local/lib
+OPENCV_INCLUDE = /usr/include/opencv4
+OPENCV_LIB = /usr/lib/x86_64-linux-gnu
 
 CPPFLAGS += \
     -I$(DEEPSTREAM_INCLUDE) \
@@ -36,11 +36,7 @@ LIBS += \
     -lcudart \
     -lopencv_core \
     -lopencv_imgproc \
-    -lopencv_imgcodecs \
-    -lopencv_cudaimgproc \
-    -lopencv_cudaarithm \
-    -lopencv_cudafilters \
-    -lopencv_cudawarping
+    -lopencv_imgcodecs
 
 all: $(TARGET)
 

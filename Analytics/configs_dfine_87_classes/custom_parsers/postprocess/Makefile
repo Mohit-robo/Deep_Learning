@@ -11,13 +11,10 @@ DEEPSTREAM_INCLUDE = $(DEEPSTREAM_DIR)/sources/includes
 CUDA_INCLUDE = /usr/local/cuda/include
 CUDA_LIB = /usr/local/cuda/lib64
 
-OPENCV_INCLUDE = /usr/local/include/opencv4
-OPENCV_LIB = /usr/local/lib
 
 CPPFLAGS += \
     -I$(DEEPSTREAM_INCLUDE) \
-    -I$(CUDA_INCLUDE) \
-    -I$(OPENCV_INCLUDE)
+    -I$(CUDA_INCLUDE)
 
 CXXFLAGS += \
     -std=c++17 \
@@ -29,18 +26,10 @@ CXXFLAGS += \
 
 LDFLAGS += \
     -shared \
-    -L$(CUDA_LIB) \
-    -L$(OPENCV_LIB)
+    -L$(CUDA_LIB)
 
 LIBS += \
-    -lcudart \
-    -lopencv_core \
-    -lopencv_imgproc \
-    -lopencv_imgcodecs \
-    -lopencv_cudaimgproc \
-    -lopencv_cudaarithm \
-    -lopencv_cudafilters \
-    -lopencv_cudawarping
+    -lcudart
 
 all: $(TARGET)
 

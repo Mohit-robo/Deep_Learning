@@ -4,28 +4,28 @@ perf-measurement-interval-sec=5
 
 [tiled-display]
 enable=1
-rows=2
-columns=2
+rows=1
+columns=1
 width=1920
 height=1080
 gpu-id=0
 nvbuf-memory-type=0
 
 [source-list]
-num-source-bins=4
-list=file:///home/griffyn/Mohit_Sentinal_Testing/anpr_videos/10-30.mp4;file:///home/griffyn/Mohit_Sentinal_Testing/anpr_videos/11-30.mp4;file:///home/griffyn/Mohit_Sentinal_Testing/anpr_videos/12-30.mp4;file:///home/griffyn/Mohit_Sentinal_Testing/anpr_videos/16-00.mp4
+num-source-bins=1
+list=file:///app/anpr_videos/demo_video.mp4
 use-nvmultiurisrcbin=1
 stream-name-display=1
-sensor-id-list=1;2;3;4
-sensor-name-list=cam_1;cam_2;cam_3;cam_4
-max-batch-size=4
+sensor-id-list=1
+sensor-name-list=cam_1;
+max-batch-size=1
 http-ip=localhost
 http-port=9011
 
 [source-attr-all]
 enable=1
 type=3
-num-sources=4
+num-sources=1
 gpu-id=0
 cudadec-memtype=0
 nvbuf-memory-type=0
@@ -38,14 +38,14 @@ select-rtp-protocol=4
 udp-buffer-size=1000000
 
 [sink0]
-enable=0
-type=2
-sync=1
+enable=1
+type=1
+sync=0
 gpu-id=0
 nvbuf-memory-type=0
 
 [sink1]
-enable=1
+enable=0
 #Type - 1=FakeSink 2=EglSink 3=File 4=UDPSink 5=nvdrmvideosink 6=MsgConvBroker
 type=6
 gpu-id=0
@@ -111,7 +111,7 @@ display-text=1
 gpu-id=0
 live-source=1
 #buffer-pool-size=16
-batch-size=4
+batch-size=1
 batched-push-timeout=40000
 width=1920
 height=1080
@@ -122,12 +122,12 @@ drop-pipeline-eos=1
 [primary-gie]
 enable=1
 gpu-id=0
-batch-size=4
+batch-size=1
 bbox-border-color0=1;0;0;1
 interval=0
 gie-unique-id=1
 nvbuf-memory-type=0
-config-file=/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/config_infer_primary_87_classes_1.yml
+config-file=/app/configs_dfine_87_classes/config_infer_primary_87_classes_1.yml
 
 [secondary-gie0]
 enable=1
@@ -135,11 +135,11 @@ enable=1
 plugin-type=0
 # nvinferserserver's gpu-id can only set from its own config-file
 #gpu-id=0
-batch-size=8
+batch-size=1
 gie-unique-id=2
 operate-on-gie-id=1
 operate-on-class-ids=80;83;84
-config-file=/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/config_infer_secondary_craft_nvinfer.txt
+config-file=/app/configs_dfine_87_classes/config_infer_secondary_craft_nvinfer.txt
 
 
 [secondary-gie1]
@@ -148,11 +148,11 @@ enable=1
 plugin-type=0
 # nvinferserserver's gpu-id can only set from its own config-file
 #gpu-id=0
-batch-size=32
+batch-size=4
 gie-unique-id=3
 operate-on-gie-id=2
 operate-on-class-ids=0
-config-file=/home/griffyn/Mohit_Sentinal_Testing/configs_dfine_87_classes/config_infer_secondary_parseq_nvinfer.txt
+config-file=/app/configs_dfine_87_classes/config_infer_secondary_parseq_nvinfer.txt
 
 [tracker]
 enable=1
