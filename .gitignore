@@ -1,5 +1,6 @@
 .ipynb_checkpoints
 __pycache__
+.pytest_cache
 
 NLP/nlp/
 NLP/Named_entity_rec/ner

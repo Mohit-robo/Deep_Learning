@@ -1,0 +1,1489 @@
+{
+  "throughput_img_per_sec": 0.04,
+  "multiclass": {
+    "gender": {
+      "accuracy": 0.65,
+      "correct": 13,
+      "total": 20,
+      "confusion": [
+        [
+          5,
+          0
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "labels": [
+        "a photo of a man",
+        "a photo of a woman"
+      ]
+    },
+    "age": {
+      "accuracy": 0.4,
+      "correct": 8,
+      "total": 20,
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          5,
+          2,
+          0
+        ],
+        [
+          2,
+          2,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          3,
+          2
+        ]
+      ],
+      "labels": [
+        "a photo of a teenager",
+        "a photo of a young adult",
+        "a photo of a middle-aged person",
+        "a photo of an elderly person"
+      ]
+    },
+    "angle": {
+      "accuracy": 0.7,
+      "correct": 14,
+      "total": 20,
+      "confusion": [
+        [
+          10,
+          0,
+          0
+        ],
+        [
+          3,
+          2,
+          0
+        ],
+        [
+          3,
+          0,
+          2
+        ]
+      ],
+      "labels": [
+        "a photo of a person seen from the front",
+        "a photo of a person seen from the back",
+        "a photo of a person seen from the side"
+      ]
+    },
+    "hair": {
+      "accuracy": 0.65,
+      "correct": 13,
+      "total": 20,
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          5
+        ]
+      ],
+      "labels": [
+        "a photo of a person with black hair",
+        "a photo of a person with brown hair",
+        "a photo of a person with blonde hair",
+        "a photo of a person with grey or white hair",
+        "a photo of a person with red or auburn hair",
+        "a photo of a person with shaved or very short hair"
+      ]
+    },
+    "top_type": {
+      "accuracy": 0.65,
+      "correct": 13,
+      "total": 20,
+      "confusion": [
+        [
+          5,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          5,
+          0,
+          0
+        ],
+        [
+          5,
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "labels": [
+        "a photo of a person wearing a t-shirt",
+        "a photo of a person wearing a tank top",
+        "a photo of a person wearing a hoodie",
+        "a photo of a person wearing a knit sweater",
+        "a photo of a person wearing a leather jacket",
+        "a photo of a person wearing a puffer jacket"
+      ]
+    },
+    "top_color": {
+      "accuracy": 0.75,
+      "correct": 15,
+      "total": 20,
+      "confusion": [
+        [
+          3,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          9,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "labels": [
+        "a photo of a person wearing a white top",
+        "a photo of a person wearing a black top",
+        "a photo of a person wearing a grey top",
+        "a photo of a person wearing a navy blue top",
+        "a photo of a person wearing a bright red top",
+        "a photo of a person wearing a forest green top",
+        "a photo of a person wearing a yellow top"
+      ]
+    },
+    "bottom_type": {
+      "accuracy": 0.7,
+      "correct": 14,
+      "total": 20,
+      "confusion": [
+        [
+          3,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          5
+        ]
+      ],
+      "labels": [
+        "a photo of a person wearing denim jeans",
+        "a photo of a person wearing formal trousers",
+        "a photo of a person wearing cargo pants",
+        "a photo of a person wearing sweatpants",
+        "a photo of a person wearing shorts",
+        "a photo of a person wearing leggings"
+      ]
+    },
+    "bottom_color": {
+      "accuracy": 0.6,
+      "correct": 12,
+      "total": 20,
+      "confusion": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          12,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "labels": [
+        "a photo of a person wearing white trousers or bottoms",
+        "a photo of a person wearing black trousers or bottoms",
+        "a photo of a person wearing blue or dark blue trousers or bottoms",
+        "a photo of a person wearing dark grey trousers or bottoms",
+        "a photo of a person wearing khaki or beige trousers or bottoms"
+      ]
+    }
+  },
+  "binary": {
+    "carrying_backpack": {
+      "accuracy": 0.75,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "tn": 15,
+      "fn": 5
+    },
+    "carrying_handbag": {
+      "accuracy": 0.9,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 2,
+      "tn": 18,
+      "fn": 0
+    },
+    "holding_umbrella": {
+      "accuracy": 1.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "tn": 20,
+      "fn": 0
+    },
+    "holding_smartphone": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 5,
+      "fp": 0,
+      "tn": 15,
+      "fn": 0
+    },
+    "wearing_cap": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 5,
+      "fp": 0,
+      "tn": 15,
+      "fn": 0
+    },
+    "wearing_sunglasses": {
+      "accuracy": 0.9,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1": 0.75,
+      "tp": 3,
+      "fp": 0,
+      "tn": 15,
+      "fn": 2
+    }
+  },
+  "per_image": [
+    {
+      "image": "ped_1_img1.png",
+      "gt": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "seen from the side",
+        "hair": "brown",
+        "top_type": "leather jacket",
+        "top_color": "white",
+        "bottom_type": "denim jeans",
+        "bottom_color": "dark grey",
+        "carrying_backpack": true,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "teenager",
+        "angle": "person seen from the front",
+        "hair": "person with black hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a white top",
+        "bottom_type": "person wearing denim jeans",
+        "bottom_color": "person wearing white trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": false,
+        "hair": false,
+        "top_type": false,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": false,
+        "carrying_backpack": false,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_1_img2.png",
+      "gt": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "seen from the side",
+        "hair": "brown",
+        "top_type": "leather jacket",
+        "top_color": "white",
+        "bottom_type": "denim jeans",
+        "bottom_color": "dark grey",
+        "carrying_backpack": true,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "middle-aged person",
+        "angle": "person seen from the side",
+        "hair": "person with black hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing cargo pants",
+        "bottom_color": "person wearing khaki or beige trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": true,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": true,
+        "hair": false,
+        "top_type": false,
+        "top_color": false,
+        "bottom_type": false,
+        "bottom_color": false,
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_1_img3.png",
+      "gt": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "seen from the side",
+        "hair": "brown",
+        "top_type": "leather jacket",
+        "top_color": "white",
+        "bottom_type": "denim jeans",
+        "bottom_color": "dark grey",
+        "carrying_backpack": true,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "teenager",
+        "angle": "person seen from the front",
+        "hair": "person with black hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a white top",
+        "bottom_type": "person wearing denim jeans",
+        "bottom_color": "person wearing white trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": false,
+        "hair": false,
+        "top_type": false,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": false,
+        "carrying_backpack": false,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_1_img4.png",
+      "gt": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "seen from the side",
+        "hair": "brown",
+        "top_type": "leather jacket",
+        "top_color": "white",
+        "bottom_type": "denim jeans",
+        "bottom_color": "dark grey",
+        "carrying_backpack": true,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "teenager",
+        "angle": "person seen from the front",
+        "hair": "person with black hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a white top",
+        "bottom_type": "person wearing denim jeans",
+        "bottom_color": "person wearing white trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": false,
+        "hair": false,
+        "top_type": false,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": false,
+        "carrying_backpack": false,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_1_img5.png",
+      "gt": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "seen from the side",
+        "hair": "brown",
+        "top_type": "leather jacket",
+        "top_color": "white",
+        "bottom_type": "denim jeans",
+        "bottom_color": "dark grey",
+        "carrying_backpack": true,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "middle-aged person",
+        "angle": "person seen from the side",
+        "hair": "person with brown hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing formal trousers",
+        "bottom_color": "person wearing khaki or beige trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": true,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": true,
+        "hair": true,
+        "top_type": false,
+        "top_color": false,
+        "bottom_type": false,
+        "bottom_color": false,
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_2_img1.png",
+      "gt": {
+        "gender": "woman",
+        "age": "middle-aged",
+        "angle": "seen from the back",
+        "hair": "blonde",
+        "top_type": "leather jacket",
+        "top_color": "black",
+        "bottom_type": "sweatpants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "middle-aged person",
+        "angle": "person seen from the front",
+        "hair": "person with blonde hair",
+        "top_type": "person wearing a leather jacket",
+        "top_color": "person wearing a black top",
+        "bottom_type": "person wearing sweatpants",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": false,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_2_img2.png",
+      "gt": {
+        "gender": "woman",
+        "age": "middle-aged",
+        "angle": "seen from the back",
+        "hair": "blonde",
+        "top_type": "leather jacket",
+        "top_color": "black",
+        "bottom_type": "sweatpants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "person seen from the back",
+        "hair": "person with blonde hair",
+        "top_type": "person wearing a leather jacket",
+        "top_color": "person wearing a black top",
+        "bottom_type": "person wearing formal trousers",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "correct": {
+        "gender": true,
+        "age": false,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": false,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_2_img3.png",
+      "gt": {
+        "gender": "woman",
+        "age": "middle-aged",
+        "angle": "seen from the back",
+        "hair": "blonde",
+        "top_type": "leather jacket",
+        "top_color": "black",
+        "bottom_type": "sweatpants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "pred": {
+        "gender": "man",
+        "age": "teenager",
+        "angle": "person seen from the front",
+        "hair": "person with black hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a white top",
+        "bottom_type": "person wearing denim jeans",
+        "bottom_color": "person wearing white trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": false,
+        "hair": false,
+        "top_type": false,
+        "top_color": false,
+        "bottom_type": false,
+        "bottom_color": false,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      }
+    },
+    {
+      "image": "ped_2_img4.png",
+      "gt": {
+        "gender": "woman",
+        "age": "middle-aged",
+        "angle": "seen from the back",
+        "hair": "blonde",
+        "top_type": "leather jacket",
+        "top_color": "black",
+        "bottom_type": "sweatpants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "pred": {
+        "gender": "man",
+        "age": "teenager",
+        "angle": "person seen from the front",
+        "hair": "person with black hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a white top",
+        "bottom_type": "person wearing denim jeans",
+        "bottom_color": "person wearing white trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": false,
+        "age": false,
+        "angle": false,
+        "hair": false,
+        "top_type": false,
+        "top_color": false,
+        "bottom_type": false,
+        "bottom_color": false,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      }
+    },
+    {
+      "image": "ped_2_img5.png",
+      "gt": {
+        "gender": "woman",
+        "age": "middle-aged",
+        "angle": "seen from the back",
+        "hair": "blonde",
+        "top_type": "leather jacket",
+        "top_color": "black",
+        "bottom_type": "sweatpants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "young adult",
+        "angle": "person seen from the back",
+        "hair": "person with blonde hair",
+        "top_type": "person wearing a leather jacket",
+        "top_color": "person wearing a black top",
+        "bottom_type": "person wearing formal trousers",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": false,
+        "wearing_sunglasses": true
+      },
+      "correct": {
+        "gender": true,
+        "age": false,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": false,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_3_img1.png",
+      "gt": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "seen from the front",
+        "hair": "shaved",
+        "top_type": "knit sweater",
+        "top_color": "navy blue",
+        "bottom_type": "cargo pants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "person seen from the front",
+        "hair": "person with shaved or very short hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing cargo pants",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_3_img2.png",
+      "gt": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "seen from the front",
+        "hair": "shaved",
+        "top_type": "knit sweater",
+        "top_color": "navy blue",
+        "bottom_type": "cargo pants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "person seen from the front",
+        "hair": "person with shaved or very short hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a white top",
+        "bottom_type": "person wearing cargo pants",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": false,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_3_img3.png",
+      "gt": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "seen from the front",
+        "hair": "shaved",
+        "top_type": "knit sweater",
+        "top_color": "navy blue",
+        "bottom_type": "cargo pants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "person seen from the front",
+        "hair": "person with shaved or very short hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing cargo pants",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_3_img4.png",
+      "gt": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "seen from the front",
+        "hair": "shaved",
+        "top_type": "knit sweater",
+        "top_color": "navy blue",
+        "bottom_type": "cargo pants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "person seen from the front",
+        "hair": "person with shaved or very short hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing cargo pants",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_3_img5.png",
+      "gt": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "seen from the front",
+        "hair": "shaved",
+        "top_type": "knit sweater",
+        "top_color": "navy blue",
+        "bottom_type": "cargo pants",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "man",
+        "age": "young adult",
+        "angle": "person seen from the front",
+        "hair": "person with shaved or very short hair",
+        "top_type": "person wearing a knit sweater",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing cargo pants",
+        "bottom_color": "person wearing dark grey trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": false,
+        "wearing_cap": true,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": false,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_4_img1.png",
+      "gt": {
+        "gender": "woman",
+        "age": "elderly",
+        "angle": "seen from the front",
+        "hair": "grey",
+        "top_type": "t-shirt",
+        "top_color": "navy blue",
+        "bottom_type": "leggings",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "middle-aged person",
+        "angle": "person seen from the front",
+        "hair": "person with grey or white hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing leggings",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": false,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_4_img2.png",
+      "gt": {
+        "gender": "woman",
+        "age": "elderly",
+        "angle": "seen from the front",
+        "hair": "grey",
+        "top_type": "t-shirt",
+        "top_color": "navy blue",
+        "bottom_type": "leggings",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "middle-aged person",
+        "angle": "person seen from the front",
+        "hair": "person with black hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing leggings",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": false,
+        "angle": true,
+        "hair": false,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_4_img3.png",
+      "gt": {
+        "gender": "woman",
+        "age": "elderly",
+        "angle": "seen from the front",
+        "hair": "grey",
+        "top_type": "t-shirt",
+        "top_color": "navy blue",
+        "bottom_type": "leggings",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "middle-aged person",
+        "angle": "person seen from the front",
+        "hair": "person with grey or white hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing leggings",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": false,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_4_img4.png",
+      "gt": {
+        "gender": "woman",
+        "age": "elderly",
+        "angle": "seen from the front",
+        "hair": "grey",
+        "top_type": "t-shirt",
+        "top_color": "navy blue",
+        "bottom_type": "leggings",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "elderly person",
+        "angle": "person seen from the front",
+        "hair": "person with grey or white hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing leggings",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    },
+    {
+      "image": "ped_4_img5.png",
+      "gt": {
+        "gender": "woman",
+        "age": "elderly",
+        "angle": "seen from the front",
+        "hair": "grey",
+        "top_type": "t-shirt",
+        "top_color": "navy blue",
+        "bottom_type": "leggings",
+        "bottom_color": "black",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "pred": {
+        "gender": "woman",
+        "age": "elderly person",
+        "angle": "person seen from the front",
+        "hair": "person with grey or white hair",
+        "top_type": "person wearing a t-shirt",
+        "top_color": "person wearing a navy blue top",
+        "bottom_type": "person wearing leggings",
+        "bottom_color": "person wearing black trousers or bottoms",
+        "carrying_backpack": false,
+        "carrying_handbag": false,
+        "holding_umbrella": false,
+        "holding_smartphone": true,
+        "wearing_cap": false,
+        "wearing_sunglasses": false
+      },
+      "correct": {
+        "gender": true,
+        "age": true,
+        "angle": true,
+        "hair": true,
+        "top_type": true,
+        "top_color": true,
+        "bottom_type": true,
+        "bottom_color": true,
+        "carrying_backpack": true,
+        "carrying_handbag": true,
+        "holding_umbrella": true,
+        "holding_smartphone": true,
+        "wearing_cap": true,
+        "wearing_sunglasses": true
+      }
+    }
+  ]
+}
