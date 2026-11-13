@@ -45,7 +45,7 @@ gpu-id=0
 nvbuf-memory-type=0
 
 [sink1]
-enable=0
+enable=1
 #Type - 1=FakeSink 2=EglSink 3=File 4=UDPSink 5=nvdrmvideosink 6=MsgConvBroker
 type=6
 gpu-id=0
@@ -63,8 +63,8 @@ msg-conv-msg2p-new-api=0
 msg-conv-frame-interval=30
 msg-broker-proto-lib=/opt/nvidia/deepstream/deepstream/lib/libnvds_kafka_proto.so
 #Provide your msg-broker-conn-str here
-msg-broker-conn-str=localhost;9092;topic
-topic=topic
+msg-broker-conn-str=kafka;9092;deepstream-topic
+topic=deepstream-topic
 #Optional:
 msg-broker-config=ds-kafka-config.txt
 new-api=0
@@ -127,32 +127,7 @@ bbox-border-color0=1;0;0;1
 interval=0
 gie-unique-id=1
 nvbuf-memory-type=0
-config-file=/app/configs_dfine_87_classes/config_infer_primary_87_classes_1.yml
-
-[secondary-gie0]
-enable=1
-#(0): nvinfer; (1): nvinferserver
-plugin-type=0
-# nvinferserserver's gpu-id can only set from its own config-file
-#gpu-id=0
-batch-size=1
-gie-unique-id=2
-operate-on-gie-id=1
-operate-on-class-ids=80;83;84
-config-file=/app/configs_dfine_87_classes/config_infer_secondary_craft_nvinfer.txt
-
-
-[secondary-gie1]
-enable=1
-#(0): nvinfer; (1): nvinferserver
-plugin-type=0
-# nvinferserserver's gpu-id can only set from its own config-file
-#gpu-id=0
-batch-size=4
-gie-unique-id=3
-operate-on-gie-id=2
-operate-on-class-ids=0
-config-file=/app/configs_dfine_87_classes/config_infer_secondary_parseq_nvinfer.txt
+config-file=/app/configs_dfine_87_classes/config_infer_primary_87_classes.yml
 
 [tracker]
 enable=1

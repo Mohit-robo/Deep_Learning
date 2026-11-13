@@ -29,32 +29,7 @@
 #include <errno.h>
 #include <dlfcn.h>
 
-// Struct for post processing
-typedef struct {
-    char *text;
-    float *confs;
-    int num_confs;
-    char *status;
-} PlateResult;
 
-typedef PlateResult* (*ProcessPlateFunc)(char **words_text, float **words_confs, int *words_num_confs, float **words_polys, int num_words);
-typedef void (*FreePlateResultFunc)(PlateResult *result);
-
-static void* postproc_lib_handle = NULL;
-static ProcessPlateFunc process_plate_fn = NULL;
-static FreePlateResultFunc free_plate_result_fn = NULL;
-
-static void load_postproc_lib() {
-    if (!postproc_lib_handle) {
-        postproc_lib_handle = dlopen("/app/configs_dfine_87_classes/custom_parsers/postprocess/libpostprocess.so", RTLD_LAZY);
-        if (postproc_lib_handle) {
-            process_plate_fn = (ProcessPlateFunc)dlsym(postproc_lib_handle, "process_plate");
-            free_plate_result_fn = (FreePlateResultFunc)dlsym(postproc_lib_handle, "free_plate_result");
-        } else {
-            g_printerr("Failed to load libpostprocess.so: %s\n", dlerror());
-        }
-    }
-}
 
 #include "deepstream_app.h"
 #include "deepstream_config_file_parser.h"
@@ -69,8 +44,12 @@ static void load_postproc_lib() {
 #include "nvdsmeta_schema.h"
 
 #include "deepstream_test5_app.h"
-#include "plate_accumulators.hpp"
+#include "nvbufsurface.h"
+#include "nvds_obj_encode.h"
 
+// Global context handle for JPEG encoding
+static NvDsObjEncCtxHandle obj_ctx_handle = NULL;
+static gchar frame_dump_dir[512] = {0};
 #define MAX_DISPLAY_LEN (64)
 #define MAX_TIME_STAMP_LEN (64)
 #define STREAMMUX_BUFFER_POOL_SIZE (16)
@@ -553,37 +532,10 @@ generate_event_msg_meta (AppCtx * appCtx, gpointer data, gint class_id, gboolean
   NvDsEventMsgMeta *meta = (NvDsEventMsgMeta *) data;
   GstClockTime ts_generated = 0;
 
-  if (obj_params->class_id==PGIE_CLASS_ID_PERSON )
-     meta->objType = NVDS_OBJECT_TYPE_PERSON; /**< object unknown */
-  // else if (obj_params->class_id==PGIE_CLASS_ID_FACE )
-  //    meta->objType = NVDS_OBJECT_TYPE_FACE;
-  else if (obj_params->class_id == 80 || obj_params->class_id == 83 || obj_params->class_id == 84) {
-     meta->objType = NVDS_OBJECT_TYPE_VEHICLE;
-     
-     // Extract the custom classifier meta for plate text (id 999)
-     char* plate_text = NULL;
-     for (NvDsMetaList *l_class = obj_params->classifier_meta_list; l_class != NULL; l_class = l_class->next) {
-       NvDsClassifierMeta *class_meta = (NvDsClassifierMeta *)l_class->data;
-       if (class_meta->unique_component_id == 999) {
-         for (NvDsMetaList *l_label = class_meta->label_info_list; l_label != NULL; l_label = l_label->next) {
-           NvDsLabelInfo *label_info = (NvDsLabelInfo *)l_label->data;
-           plate_text = label_info->result_label;
-           break;
-         }
-       }
-     }
-
-     if (plate_text && strlen(plate_text) > 0) {
-       NvDsVehicleObject *obj = (NvDsVehicleObject *) g_malloc0 (sizeof (NvDsVehicleObject));
-       obj->type = g_strdup ("license_plate");
-       obj->license = g_strdup (plate_text);
-       meta->extMsg = obj;
-       meta->extMsgSize = sizeof (NvDsVehicleObject);
-     }
-  }
+  if (obj_params->class_id == PGIE_CLASS_ID_PERSON)
+     meta->objType = NVDS_OBJECT_TYPE_PERSON;
   else
     meta->objType = NVDS_OBJECT_TYPE_UNKNOWN;
-  //meta->objType = NVDS_OBJECT_TYPE_UNKNOWN;
   /* The sensor_id is parsed from the source group name which has the format
    * [source<sensor-id>]. */
   meta->sensorId = sensor_id;
@@ -689,6 +641,13 @@ generate_event_msg_meta (AppCtx * appCtx, gpointer data, gint class_id, gboolean
     LOGD("this stream [%d:%s] was added using REST API; we have Sensor Info\n",
         sensorInfo->source_id, sensorInfo->sensor_id);
     meta->sensorStr = g_strdup (sensorInfo->sensor_id);
+  } else if (stream_id < (gint)appCtx->config.num_source_sub_bins) {
+    /** Static config stream – use sensor-name-list value (e.g. "cam_1") */
+    if (appCtx->config.sensor_name_list &&
+        appCtx->config.sensor_name_list[stream_id] &&
+        appCtx->config.sensor_name_list[stream_id][0] != '\0') {
+      meta->sensorStr = g_strdup (appCtx->config.sensor_name_list[stream_id]);
+    }
   }
 
   (void) ts_generated;
@@ -723,20 +682,11 @@ generate_event_msg_meta (AppCtx * appCtx, gpointer data, gint class_id, gboolean
 //       generate_person_meta (obj);
 
 //       meta->extMsg = obj;
-//       meta->extMsgSize = sizeof (NvDsPersonObject);
 //     }
 // #endif /**< GENERATE_DUMMY_META_EXT */
 //   }
-
 }
 
-/**
- * Callback function to be called once all inferences (Primary + Secondary)
- * are done. This is opportunity to modify content of the metadata.
- * e.g. Here Person is being replaced with Man/Woman and corresponding counts
- * are being maintained. It should be modified according to network classes
- * or can be removed altogether if not required.
- */
 static void
 bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
     NvDsBatchMeta * batch_meta, guint index)
@@ -750,6 +700,12 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
   gfloat *face_emb_vector = NULL;
   guint reid_emb_length = 0;
   float *reid_emb_vector = NULL;
+
+  NvBufSurface *ip_surf = NULL;
+  GstMapInfo inmap = GST_MAP_INFO_INIT;
+  if (obj_ctx_handle && gst_buffer_map (buf, &inmap, GST_MAP_READ)) {
+    ip_surf = (NvBufSurface *) inmap.data;
+  }
 
   for (NvDsUserMetaList *l_batch_user = batch_meta->batch_user_meta_list; l_batch_user != NULL;
       l_batch_user = l_batch_user->next) {
@@ -771,135 +727,9 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
     gchar * terminatedString = (gchar*)malloc(MAX_STRING_LENGTH*sizeof(gchar));
     terminatedString[0]='\0';
     NvDsFrameMeta *frame_meta = (NvDsFrameMeta *) l_frame->data;
+    gboolean frame_saved = FALSE;
 
-    // --- Plate Post-Processing Logic ---
-    load_postproc_lib();
-
-    #define MAX_PLATES 100
-    NvDsObjectMeta* plates[MAX_PLATES];
-    int num_plates = 0;
-
-    for (NvDsMetaList * l_obj = frame_meta->obj_meta_list; l_obj != NULL; l_obj = l_obj->next) {
-      NvDsObjectMeta *obj = (NvDsObjectMeta *) l_obj->data;
-      if (obj->class_id == 80 || obj->class_id == 83 || obj->class_id == 84) {
-        if (num_plates < MAX_PLATES) plates[num_plates++] = obj;
-      }
-    }
-
-    #define MAX_WORDS_PER_PLATE 50
-    NvDsObjectMeta* plate_words[MAX_PLATES][MAX_WORDS_PER_PLATE];
-    int num_words_per_plate[MAX_PLATES] = {0};
-
-    for (NvDsMetaList * l_obj = frame_meta->obj_meta_list; l_obj != NULL; l_obj = l_obj->next) {
-      NvDsObjectMeta *obj = (NvDsObjectMeta *) l_obj->data;
-      if (obj->unique_component_id == 2) { // CRAFT objects
-        float cx = obj->rect_params.left + obj->rect_params.width / 2.0f;
-        float cy = obj->rect_params.top + obj->rect_params.height / 2.0f;
-        int best_plate_id = -1;
-        for (int i = 0; i < num_plates; i++) {
-          NvDsObjectMeta *p = plates[i];
-          if (cx >= p->rect_params.left - 5 && cx <= p->rect_params.left + p->rect_params.width + 5 &&
-              cy >= p->rect_params.top - 5 && cy <= p->rect_params.top + p->rect_params.height + 5) {
-            best_plate_id = i;
-            break;
-          }
-        }
-        if (best_plate_id >= 0 && num_words_per_plate[best_plate_id] < MAX_WORDS_PER_PLATE) {
-          plate_words[best_plate_id][num_words_per_plate[best_plate_id]++] = obj;
-        }
-      }
-    }
-
-    if (process_plate_fn && free_plate_result_fn) {
-      for (int i = 0; i < num_plates; i++) {
-        int num_words = num_words_per_plate[i];
-        if (num_words == 0) continue;
-
-        char **c_texts = g_new0(char *, num_words);
-        float **c_confs = g_new0(float *, num_words);
-        int *c_num_confs = g_new0(int, num_words);
-        float **c_polys = g_new0(float *, num_words);
-
-        for (int j = 0; j < num_words; j++) {
-          NvDsObjectMeta *w_obj = plate_words[i][j];
-          char *pred_str = "";
-          float avg_conf = 0.0f;
-
-          for (NvDsMetaList *l_class = w_obj->classifier_meta_list; l_class != NULL; l_class = l_class->next) {
-            NvDsClassifierMeta *class_meta = (NvDsClassifierMeta *)l_class->data;
-            if (class_meta->unique_component_id == 3) {
-              for (NvDsMetaList *l_label = class_meta->label_info_list; l_label != NULL; l_label = l_label->next) {
-                NvDsLabelInfo *label_info = (NvDsLabelInfo *)l_label->data;
-                pred_str = label_info->result_label;
-                avg_conf = label_info->result_prob;
-              }
-            }
-          }
-
-          c_texts[j] = g_strdup(pred_str);
-          int num_c = strlen(pred_str);
-          c_num_confs[j] = num_c;
-
-          if (num_c > 0) {
-            c_confs[j] = g_new0(float, num_c);
-            for (int k = 0; k < num_c; k++) c_confs[j][k] = avg_conf;
-          }
-
-          float left = w_obj->rect_params.left;
-          float top = w_obj->rect_params.top;
-          float width = w_obj->rect_params.width;
-          float height = w_obj->rect_params.height;
-
-          c_polys[j] = g_new0(float, 8);
-          c_polys[j][0] = left; c_polys[j][1] = top;
-          c_polys[j][2] = left + width; c_polys[j][3] = top;
-          c_polys[j][4] = left + width; c_polys[j][5] = top + height;
-          c_polys[j][6] = left; c_polys[j][7] = top + height;
-        }
-
-        PlateResult *res = process_plate_fn(c_texts, c_confs, c_num_confs, c_polys, num_words);
-        if (res) {
-          NvDsObjectMeta *p = plates[i];
-          // Attach custom classifier meta (component id 999) to store the OCR string
-          NvDsClassifierMeta *classifier_meta = nvds_acquire_classifier_meta_from_pool(batch_meta);
-          classifier_meta->unique_component_id = 999;
-          NvDsLabelInfo *label_info = nvds_acquire_label_info_meta_from_pool(batch_meta);
-          strncpy(label_info->result_label, res->text, MAX_LABEL_SIZE - 1);
-          nvds_add_label_info_meta_to_classifier(classifier_meta, label_info);
-          nvds_add_classifier_meta_to_object(p, classifier_meta);
-          
-          free_plate_result_fn(res);
-
-          // Compute average character confidence from OCR word outputs
-          // (c_confs[j][k] = uniform avg_conf for word j, c_confs still valid here)
-          float plate_total_conf = 0.0f;
-          int   plate_total_chars = 0;
-          for (int j = 0; j < num_words; j++) {
-            if (c_confs[j] && c_num_confs[j] > 0) {
-              for (int k = 0; k < c_num_confs[j]; k++)
-                plate_total_conf += c_confs[j][k];
-              plate_total_chars += c_num_confs[j];
-            }
-          }
-          float plate_avg_conf = (plate_total_chars > 0) ? plate_total_conf / plate_total_chars : 0.0f;
-
-          // Feed into plate accumulator for temporal aggregation
-          plate_accum_feed(
-              (uint64_t)p->object_id,
-              label_info->result_label,
-              plate_avg_conf,
-              (uint32_t)frame_meta->source_id);
-        }
-
-        for (int j = 0; j < num_words; j++) {
-          g_free(c_texts[j]);
-          if (c_confs[j]) g_free(c_confs[j]);
-          g_free(c_polys[j]);
-        }
-        g_free(c_texts); g_free(c_confs); g_free(c_num_confs); g_free(c_polys);
-      }
-    }
-    // --- End Plate Post-Processing Logic ---
+    // --- End Plate Post-Processing Logic (disabled; ANPR runs externally) ---
     
     stream_id = frame_meta->source_id;
     GstClockTime buf_ntp_time = 0;
@@ -932,8 +762,6 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
           g_snprintf(tempBuffer, sizeof(tempBuffer), "%ld,", objList->uniqueId);
           if (objList->classId==PGIE_CLASS_ID_PERSON)
             strncat(terminatedString, tempBuffer, sizeof(terminatedString));
-          else if (objList->classId == 80 || objList->classId == 83 || objList->classId == 84)
-            plate_accum_finalize((uint64_t)objList->uniqueId, (uint32_t)frame_meta->source_id);
           else
             continue;
         // printf("Terminated tracks : %hu, %d, %ld, %d \n", stream_id_1, frame_meta->frame_num, objList->uniqueId, objList->classId);
@@ -1010,6 +838,18 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
            */
           buffer_pts = buf_ntp_time;
         }
+
+        if (ip_surf && !frame_saved && obj_ctx_handle) {
+          NvDsObjEncUsrArgs frameData = {0};
+          frameData.saveImg = TRUE;
+          frameData.isFrame = TRUE;
+          frameData.attachUsrMeta = FALSE;
+          snprintf (frameData.fileNameImg, FILE_NAME_SIZE, "%s/cam_%u_frame_%d.jpg", 
+                    frame_dump_dir, frame_meta->source_id, frame_meta->frame_num);
+          nvds_obj_enc_process (obj_ctx_handle, &frameData, ip_surf, NULL, frame_meta);
+          frame_saved = TRUE;
+        }
+
         /** Generate NvDsEventMsgMeta for every object */
         NvDsEventMsgMeta *msg_meta =
             (NvDsEventMsgMeta *) g_malloc0 (sizeof (NvDsEventMsgMeta));
@@ -1043,8 +883,14 @@ bbox_generated_probe_after_analytics (AppCtx * appCtx, GstBuffer * buf,
         }
       }
     }
-    plate_accum_reap_stale();
     testAppCtx->streams[stream_id].frameCount++;
+  }
+
+  if (ip_surf) {
+    gst_buffer_unmap (buf, &inmap);
+  }
+  if (obj_ctx_handle) {
+    nvds_obj_enc_finish (obj_ctx_handle);
   }
 }
 
@@ -1810,7 +1656,27 @@ main (int argc, char *argv[])
 
   GST_DEBUG_CATEGORY_INIT (NVDS_APP, "NVDS_APP", 0, NULL);
 
+  GDateTime *datetime = g_date_time_new_now_local ();
+  gchar *date_str = g_date_time_format (datetime, "%Y%m%d");
+  gchar base_dir[256];
+  snprintf (base_dir, sizeof(base_dir), "/opt/reid/frames/%s", date_str);
+  
+  int run_id = 1;
+  while (TRUE) {
+    snprintf (frame_dump_dir, sizeof(frame_dump_dir), "%s/run%d", base_dir, run_id);
+    if (!g_file_test (frame_dump_dir, G_FILE_TEST_EXISTS)) {
+      break;
+    }
+    run_id++;
+  }
+  g_mkdir_with_parents (frame_dump_dir, 0777);
+  g_free (date_str);
+  g_date_time_unref (datetime);
+
+  g_print ("Frames will be dumped to: %s\n", frame_dump_dir);
+
   int current_device = -1;
+  obj_ctx_handle = nvds_obj_enc_create_context (0);
   cudaGetDevice(&current_device);
   struct cudaDeviceProp prop;
   cudaGetDeviceProperties(&prop, current_device);

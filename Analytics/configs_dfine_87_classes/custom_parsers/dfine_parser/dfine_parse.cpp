@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 // Helper function to find the class with the highest confidence
 static std::pair<int, float> get_max_confidence_class(const float *logits,
@@ -18,6 +19,11 @@ static std::pair<int, float> get_max_confidence_class(const float *logits,
   }
 
   return std::make_pair(max_class_id, max_confidence);
+}
+
+// Sigmoid: converts raw logit to probability in [0, 1]
+static inline float sigmoid(float x) {
+  return 1.0f / (1.0f + std::exp(-x));
 }
 
 extern "C" bool
@@ -72,7 +78,7 @@ NvDsInferParseDFineBbox(std::vector<NvDsInferLayerInfo> const &outputLayersInfo,
 
       NvDsInferObjectDetectionInfo object;
       object.classId = class_id;
-      object.detectionConfidence = confidence;
+      object.detectionConfidence = sigmoid(confidence);  // raw logit → probability
 
       // Assuming the box format is [x_center, y_center, width, height] and
       // normalized Convert to top-left coordinates and scale to network input

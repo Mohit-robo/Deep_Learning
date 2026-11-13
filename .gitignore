@@ -12,6 +12,7 @@ output/
 model_repository/
 anpr_videos/
 
+
 #file extensions
 *.pt
 *.onnx

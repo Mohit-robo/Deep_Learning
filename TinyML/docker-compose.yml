@@ -1,0 +1,21 @@
+services:
+  dfine-seg:
+    image: nvcr.io/nvidia/pytorch:24.08-py3
+    container_name: dfine-seg
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./D-FINE-seg:/workspace
+      - ./Datasets:/datasets
+    working_dir: /workspace
+    shm_size: '8gb' # High shared memory for PyTorch dataloaders
+    tty: true
+    stdin_open: true
+    # command: tail -f /dev/null

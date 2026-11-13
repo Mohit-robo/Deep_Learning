@@ -39,6 +39,9 @@ services:
       # X11 socket mount (required for GUI rendering)
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
 
+      # Frame dumps for downstream task
+      - /opt/reid/frames:/opt/reid/frames
+
     # Better DeepStream stability
     ipc: host
     shm_size: "4gb"
@@ -52,3 +55,56 @@ services:
     privileged: true
     # Uncomment if needed
     # network_mode: host
+
+    networks:
+      - analytics-net
+
+    depends_on:
+      - kafka
+
+  # ---------------------------------------------------------------------------
+  # Kafka (KRaft mode – no ZooKeeper required)
+  # ---------------------------------------------------------------------------
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: kafka
+    restart: unless-stopped
+    ports:
+      - "9092:9092" # host access for CLI tools / external consumers
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks:
+      - analytics-net
+
+  # ---------------------------------------------------------------------------
+  # Kafka UI – browse topics/messages in the browser at http://localhost:8080
+  # ---------------------------------------------------------------------------
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - analytics-net
+
+networks:
+  analytics-net:
+    driver: bridge
